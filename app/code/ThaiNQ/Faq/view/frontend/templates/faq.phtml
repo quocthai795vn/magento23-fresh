@@ -1,0 +1,61 @@
+<?php
+$items = $this->getAllDatas();
+?>
+
+<div class="row faq-title-box">
+    <h1 class="column">FREQUENTLY ASKED QUESTIONS</h1>
+</div>
+<div class="faq row">
+    <div class="faq-top-action column">
+        <button class="faq-show">Show All</button>
+        <button class="faq-hide">Hide All</button>
+    </div>
+    <div class="question-wrapper column">
+        <?php if($items): ?>
+        <?php foreach ($items as $item): ?>
+        <div class="cms-content">
+            <div>
+                <button class="question-text"><?php echo $item['question'] ?>
+                </button>
+                <div class="question-answer">
+                    <p><?php echo $this->getAnswer($item['answer']);?></p>
+                </div>
+            </div>
+            <?php endforeach; ?>
+            <?php endif; ?>
+    </div>
+</div>
+<script>
+    require(
+        [
+            'jquery'
+        ],function($){
+            $(document).ready(function(){
+                if ( $('.faq .question-text').length ) {
+                    $('.faq .question-text').on('click', function () {
+                        if ( $(this).hasClass('active') ) {
+                            $(this).removeClass('active');
+                            $(this).next('.question-answer').slideUp();
+                        } else {
+                            $(this).addClass('active');
+                            $(this).next('.question-answer').slideDown();
+                        }
+                    });
+                }
+
+                if ( $('.faq-top-action .faq-show').length ) {
+                    $('.faq-top-action .faq-show').on('click', function () {
+                        $('.faq .question-text').addClass('active');
+                        $('.faq .question-answer').slideDown();
+                    });
+                }
+
+                if ( $('.faq-top-action .faq-hide').length ) {
+                    $('.faq-top-action .faq-hide').on('click', function () {
+                        $('.faq .question-text').removeClass('active');
+                        $('.faq .question-answer').slideUp();
+                    });
+                }
+            });
+            });
+</script>
